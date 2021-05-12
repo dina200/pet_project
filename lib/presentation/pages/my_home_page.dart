@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pet_project/application/general/theme_cubit.dart';
 import 'package:pet_project/presentation/theme/my_theme.dart';
 
-
 class MyHomePage extends StatefulWidget {
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -15,30 +14,18 @@ class _MyHomePageState extends State<MyHomePage> {
   bool _isSwitchActive = true;
   bool? _isCheckActive = true;
   int? _radioGroupValue = 1;
+  int _selectedDestination = 0;
 
-  ThemeData get theme => Theme.of(context);
+  ThemeData get _theme => Theme.of(context);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
       child: PlatformLayoutWrapper(
-        appBar: AppBar(
-          title: Text('Flutter Theme Home Page'),
-          actions: [
-            BlocBuilder<ThemeCubit, MyTheme>(
-              builder: (context, snapshot) {
-                final themeCubit = BlocProvider.of<ThemeCubit>(context);
-                return Switch(
-                  value: snapshot.isDark,
-                  onChanged: (_) => themeCubit.setTheme(),
-                );
-              },
-            ),
-          ],
-        ),
-        drawer: Drawer(),
-        body: _buildContent(),
+        appBar: _buildAppBar(),
+        drawer: _buildDrawer(),
+        body: _buildBody(),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () {},
@@ -47,8 +34,80 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  PreferredSizeWidget _buildAppBar() {
+    return AppBar(
+      title: Text('Main page'),
+      actions: [
+        BlocBuilder<ThemeCubit, MyTheme>(
+          builder: (context, snapshot) {
+            final themeCubit = BlocProvider.of<ThemeCubit>(context);
+            return Switch(
+              value: snapshot.isDark,
+              onChanged: (_) => themeCubit.setTheme(),
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildDrawer() {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          Container(
+            height: 256.0,
+            alignment: Alignment.centerLeft,
+            padding: EdgeInsets.only(left: 16.0),
+            child: Text(
+              'Header',
+              style: _theme.textTheme.headline6,
+            ),
+          ),
+          ListTile(
+            leading: Icon(Icons.favorite),
+            title: Text('Item 1'),
+            selected: _selectedDestination == 0,
+            onTap: () => _selectDestination(0),
+          ),
+          ListTile(
+            leading: Icon(Icons.delete),
+            title: Text('Item 2'),
+            selected: _selectedDestination == 1,
+            onTap: () => _selectDestination(1),
+          ),
+          ListTile(
+            leading: Icon(Icons.label),
+            title: Text('Item 3'),
+            selected: _selectedDestination == 2,
+            onTap: () => _selectDestination(2),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _selectDestination(int index) {
+    setState(() {
+      _selectedDestination = index;
+    });
+    Navigator.pop(context);
+  }
+
+  Widget _buildBody() {
+    return IndexedStack(
+      index: _selectedDestination,
+      children: [
+        _buildContent(),
+        Center(child: Text('second')),
+        Center(child: Text('third')),
+      ],
+    );
+  }
+
   Widget _buildContent() {
-    final textTheme = theme.textTheme;
+    final textTheme = _theme.textTheme;
     return ListView(
       padding: const EdgeInsets.all(16.0),
       children: [
@@ -208,7 +267,8 @@ class PlatformLayoutWrapper extends StatelessWidget {
               appBar: appBar,
               body: body,
               floatingActionButton: floatingActionButton,
-              floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
+              floatingActionButtonLocation:
+                  FloatingActionButtonLocation.startTop,
             ),
           ),
         ],
