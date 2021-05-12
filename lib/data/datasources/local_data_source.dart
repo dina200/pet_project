@@ -1,8 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../infrastructure/injector/injector.dart';
-
 abstract class LocalDataSource {
   bool get isDarkMode;
 
@@ -11,7 +9,7 @@ abstract class LocalDataSource {
 
 const IS_DARK = 'IS_DARK';
 
-@Singleton(as: LocalDataSource)
+@LazySingleton(as: LocalDataSource)
 class LocalDataSourceImpl implements LocalDataSource {
   final SharedPreferences _sharedPreferences;
 

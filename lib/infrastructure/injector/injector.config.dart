@@ -20,9 +20,9 @@ Future<_i1.GetIt> $initGetIt(_i1.GetIt get,
   final registerModule = _$RegisterModule();
   await gh.factoryAsync<_i3.SharedPreferences>(() => registerModule.sharedPrefs,
       preResolve: true);
-  gh.singleton<_i4.LocalDataSource>(
-      _i4.LocalDataSourceImpl(get<_i3.SharedPreferences>()));
-  gh.singleton<_i5.ThemeCubit>(_i5.ThemeCubit(get<_i4.LocalDataSource>()));
+  gh.lazySingleton<_i4.LocalDataSource>(
+      () => _i4.LocalDataSourceImpl(get<_i3.SharedPreferences>()));
+  gh.factory<_i5.ThemeCubit>(() => _i5.ThemeCubit(get<_i4.LocalDataSource>()));
   return get;
 }
 

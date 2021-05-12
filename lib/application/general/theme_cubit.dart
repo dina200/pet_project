@@ -4,7 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:pet_project/data/datasources/local_data_source.dart';
 import 'package:pet_project/presentation/theme/my_theme.dart';
 
-@singleton
+@injectable
 class ThemeCubit extends Cubit<MyTheme> {
   final LocalDataSource _localDataSource;
 

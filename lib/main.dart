@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => getIt<ThemeCubit>())
+        BlocProvider(create: (context) => getIt<ThemeCubit>()),
       ],
       child: BlocBuilder<ThemeCubit, MyTheme>(
         builder: (BuildContext context, state) {
