@@ -1,4 +1,7 @@
+import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../infrastructure/injector/injector.dart';
 
 abstract class LocalDataSource {
   bool get isDarkMode;
@@ -8,19 +11,20 @@ abstract class LocalDataSource {
 
 const IS_DARK = 'IS_DARK';
 
+@Singleton(as: LocalDataSource)
 class LocalDataSourceImpl implements LocalDataSource {
-  final SharedPreferences sharedPreferences;
+  final SharedPreferences _sharedPreferences;
 
-  LocalDataSourceImpl({required this.sharedPreferences});
+  LocalDataSourceImpl(this._sharedPreferences);
 
   @override
   bool get isDarkMode {
-    final isDark = sharedPreferences.getBool(IS_DARK);
+    final isDark =_sharedPreferences.getBool(IS_DARK);
     return isDark ?? false;
   }
 
   @override
   Future<void> setThemeMode(bool isDark) async {
-    await sharedPreferences.setBool(IS_DARK, isDark);
+    await _sharedPreferences.setBool(IS_DARK, isDark);
   }
 }
