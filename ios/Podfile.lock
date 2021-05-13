@@ -1,0 +1,29 @@
+PODS:
+  - Flutter (1.0.0)
+  - lottie-ios (3.2.2)
+  - shared_preferences (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - lottie-ios
+  - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
+
+SPEC REPOS:
+  trunk:
+    - lottie-ios
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  shared_preferences:
+    :path: ".symlinks/plugins/shared_preferences/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
+  lottie-ios: a033bb989eea77d9f99cc4e2bbdd3788229761ad
+  shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
+
+PODFILE CHECKSUM: c3a7b63f4774792cfbf5ce4e562b229279ea3608
+
+COCOAPODS: 1.10.1
