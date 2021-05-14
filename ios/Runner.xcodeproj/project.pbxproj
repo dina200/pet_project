@@ -41,7 +41,6 @@
 		7AFA3C8E1D35360C0083082E /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = Flutter/Release.xcconfig; sourceTree = "<group>"; };
 		90409433A4FECBD56E054FD9 /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 		9740EEB21CF90195004384FC /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = Flutter/Debug.xcconfig; sourceTree = "<group>"; };
-		9740EEB31CF90195004384FC /* Generated.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Generated.xcconfig; path = Flutter/Generated.xcconfig; sourceTree = "<group>"; };
 		97C146EE1CF9000F007C117D /* Runner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Runner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		97C146FB1CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		97C146FD1CF9000F007C117D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -50,6 +49,8 @@
 		AB596C62204530709A08D387 /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
 		D773C93A264D6ACA000EF509 /* splash_animation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = splash_animation.json; sourceTree = "<group>"; };
 		D773C940264D6AD4000EF509 /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		D7A78E89264EC5F40080352C /* Generated.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Generated.xcconfig; path = Flutter/Generated.xcconfig; sourceTree = "<group>"; };
+		D7A78E8A264EC5F40080352C /* flutter_export_environment.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; name = flutter_export_environment.sh; path = Flutter/flutter_export_environment.sh; sourceTree = "<group>"; };
 		E691143E36DC7C1122E4545A /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -68,10 +69,11 @@
 		9740EEB11CF90186004384FC /* Flutter */ = {
 			isa = PBXGroup;
 			children = (
+				D7A78E8A264EC5F40080352C /* flutter_export_environment.sh */,
+				D7A78E89264EC5F40080352C /* Generated.xcconfig */,
 				3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */,
 				9740EEB21CF90195004384FC /* Debug.xcconfig */,
 				7AFA3C8E1D35360C0083082E /* Release.xcconfig */,
-				9740EEB31CF90195004384FC /* Generated.xcconfig */,
 			);
 			name = Flutter;
 			sourceTree = "<group>";
@@ -99,15 +101,13 @@
 			isa = PBXGroup;
 			children = (
 				74858FAE1ED2DC5600515810 /* AppDelegate.swift */,
-				97C146FD1CF9000F007C117D /* Assets.xcassets */,
+				D773C940264D6AD4000EF509 /* SplashViewController.swift */,
+				D7A78E8F264EC7040080352C /* Assets */,
+				D7A78E90264EC91C0080352C /* Storyboards */,
 				1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */,
 				1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */,
 				97C147021CF9000F007C117D /* Info.plist */,
-				97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */,
-				97C146FA1CF9000F007C117D /* Main.storyboard */,
 				74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */,
-				D773C93A264D6ACA000EF509 /* splash_animation.json */,
-				D773C940264D6AD4000EF509 /* SplashViewController.swift */,
 			);
 			path = Runner;
 			sourceTree = "<group>";
@@ -128,6 +128,24 @@
 				E691143E36DC7C1122E4545A /* Pods_Runner.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D7A78E8F264EC7040080352C /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				97C146FD1CF9000F007C117D /* Assets.xcassets */,
+				D773C93A264D6ACA000EF509 /* splash_animation.json */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		D7A78E90264EC91C0080352C /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */,
+				97C146FA1CF9000F007C117D /* Main.storyboard */,
+			);
+			path = Storyboards;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
