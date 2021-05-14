@@ -1,5 +1,7 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:page_transition/page_transition.dart';
 
 import 'infrastructure/injector/injector.dart';
 import 'presentation/pages/my_home_page.dart';
@@ -21,10 +23,22 @@ class MyApp extends StatelessWidget {
       ],
       child: BlocBuilder<ThemeCubit, MyTheme>(
         builder: (BuildContext context, state) {
-          return  MaterialApp(
+          final image = Image.asset(
+            state.isDark
+                ? "assets/splash_animation_dark.gif"
+                : "assets/splash_animation.gif",
+          );
+          return MaterialApp(
             title: 'Flutter Theme',
             theme: state.theme,
-            home: MyHomePage(),
+            home: AnimatedSplashScreen(
+              splash: image,
+              splashIconSize: 300.0,
+              backgroundColor: state.theme.backgroundColor,
+              nextScreen: MyHomePage(),
+              splashTransition: SplashTransition.fadeTransition,
+              pageTransitionType: PageTransitionType.fade,
+            ),
           );
         },
       ),

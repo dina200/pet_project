@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class MyTheme {
@@ -15,7 +16,9 @@ class MyTheme {
   MyTheme.light() : isDark = false {
     _materialColor = _createMaterialColor(Color(0xff572b9f));
     _accentColor = _createMaterialAccentColor(Color(0xffff7552));
+    final typography = Typography.material2018(platform: defaultTargetPlatform);
     _themeData = ThemeData.from(
+      textTheme: typography.black.apply(fontFamily: 'Montserrat'),
       colorScheme: ColorScheme.fromSwatch(
         primarySwatch: _materialColor,
         primaryColorDark: _materialColor.shade700,
@@ -25,13 +28,17 @@ class MyTheme {
         errorColor: Colors.red.shade700,
         brightness: Brightness.light,
       ),
-    ).copyWith(appBarTheme: AppBarTheme(brightness: Brightness.dark));
+    ).copyWith(
+      appBarTheme: AppBarTheme(brightness: Brightness.dark),
+    );
   }
 
   MyTheme.dark() : isDark = true {
     _materialColor = _createMaterialColor(Color(0xffcc26e6));
     _accentColor = _createMaterialAccentColor(Color(0xffffbd6c));
+    final typography = Typography.material2018(platform: defaultTargetPlatform);
     _themeData = ThemeData.from(
+      textTheme: typography.white.apply(fontFamily: 'Montserrat'),
       colorScheme: ColorScheme.fromSwatch(
         primarySwatch: _materialColor,
         primaryColorDark: _materialColor.shade700,
@@ -53,10 +60,10 @@ class MyTheme {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is MyTheme &&
-      runtimeType == other.runtimeType &&
-      _materialColor == other._materialColor &&
-      _accentColor == other._accentColor &&
-      _themeData == other._themeData;
+          runtimeType == other.runtimeType &&
+          _materialColor == other._materialColor &&
+          _accentColor == other._accentColor &&
+          _themeData == other._themeData;
 
   @override
   int get hashCode =>
