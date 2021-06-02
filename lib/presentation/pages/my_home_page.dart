@@ -13,7 +13,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   bool _isSwitchActive = true;
-  TristateEnum _isCheckActive = TristateEnum.chosen;
+  TristateEnum _isTristateCheckActive = TristateEnum.chosen;
+  bool _isCheckActive = true;
   int? _radioGroupValue = 1;
   int _selectedDestination = 0;
 
@@ -144,8 +145,8 @@ class _MyHomePageState extends State<MyHomePage> {
               onChanged: (value) => setState(() => _isSwitchActive = value),
             ),
             TristateCheckbox(
-              value: _isCheckActive,
-              onChanged: (value) => setState(() => _isCheckActive = value),
+              value: _isTristateCheckActive,
+              onChanged: (value) => setState(() => _isTristateCheckActive = value),
             ),
           ],
         ),
