@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:pet_project/application/general/theme_cubit.dart';
 import 'package:pet_project/presentation/theme/my_theme.dart';
+import 'package:pet_project/presentation/tristate_checkbox.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -12,7 +13,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   bool _isSwitchActive = true;
-  bool? _isCheckActive = true;
+  TristateEnum _isCheckActive = TristateEnum.chosen;
   int? _radioGroupValue = 1;
   int _selectedDestination = 0;
 
@@ -142,10 +143,9 @@ class _MyHomePageState extends State<MyHomePage> {
               value: _isSwitchActive,
               onChanged: (value) => setState(() => _isSwitchActive = value),
             ),
-            Checkbox(
+            TristateCheckbox(
               value: _isCheckActive,
               onChanged: (value) => setState(() => _isCheckActive = value),
-              tristate: true,
             ),
           ],
         ),

@@ -6,11 +6,41 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
+enum TristateEnum {
+  chosen, notChosen, partiallyChosen,
+}
+
+extension on TristateEnum {
+  bool? get value {
+    switch(this) {
+      case TristateEnum.chosen:
+        return true;
+      case TristateEnum.partiallyChosen:
+        return null;
+      case TristateEnum.notChosen:
+        return false;
+    }
+  }
+}
+
+extension on bool? {
+  TristateEnum get tristate {
+    switch(this) {
+      case true:
+        return TristateEnum.chosen;
+      case null:
+        return TristateEnum.partiallyChosen;
+      case false:
+      default:
+        return TristateEnum.notChosen;
+    }
+  }
+}
+
 class TristateCheckbox extends StatefulWidget {
   const TristateCheckbox({
     Key? key,
     required this.value,
-    this.tristate = false,
     required this.onChanged,
     this.mouseCursor,
     this.activeColor,
@@ -24,14 +54,11 @@ class TristateCheckbox extends StatefulWidget {
     this.visualDensity,
     this.focusNode,
     this.autofocus = false,
-  })  : assert(tristate != null),
-        assert(tristate || value != null),
-        assert(autofocus != null),
-        super(key: key);
+  })  : super(key: key);
 
-  final bool? value;
+  final TristateEnum value;
 
-  final ValueChanged<bool?>? onChanged;
+  final ValueChanged<TristateEnum>? onChanged;
 
   final MouseCursor? mouseCursor;
 
@@ -40,8 +67,6 @@ class TristateCheckbox extends StatefulWidget {
   final MaterialStateProperty<Color?>? fillColor;
 
   final Color? checkColor;
-
-  final bool tristate;
 
   final MaterialTapTargetSize? materialTapTargetSize;
 
@@ -61,12 +86,13 @@ class TristateCheckbox extends StatefulWidget {
 
   static const double width = 18.0;
 
+  final bool _tristate = true;
+
   @override
   _TristateCheckboxState createState() => _TristateCheckboxState();
 }
 
-class _TristateCheckboxState extends State<TristateCheckbox>
-    with TickerProviderStateMixin {
+class _TristateCheckboxState extends State<TristateCheckbox> with TickerProviderStateMixin {
   bool get enabled => widget.onChanged != null;
   late Map<Type, Action<Intent>> _actionMap;
 
@@ -81,14 +107,14 @@ class _TristateCheckboxState extends State<TristateCheckbox>
   void _actionHandler(ActivateIntent intent) {
     if (widget.onChanged != null) {
       switch (widget.value) {
-        case false:
-          widget.onChanged!(true);
+        case TristateEnum.notChosen:
+          widget.onChanged!(TristateEnum.chosen);
           break;
-        case true:
-          widget.onChanged!(widget.tristate ? null : false);
+        case TristateEnum.chosen:
+          widget.onChanged!(widget._tristate ? TristateEnum.partiallyChosen : TristateEnum.notChosen);
           break;
-        case null:
-          widget.onChanged!(false);
+        case TristateEnum.partiallyChosen:
+          widget.onChanged!(TristateEnum.notChosen);
           break;
       }
     }
@@ -120,7 +146,7 @@ class _TristateCheckboxState extends State<TristateCheckbox>
         if (!enabled) MaterialState.disabled,
         if (_hovering) MaterialState.hovered,
         if (_focused) MaterialState.focused,
-        if (widget.value == null || widget.value!) MaterialState.selected,
+        if (widget.value.value == null || widget.value.value!) MaterialState.selected,
       };
 
   MaterialStateProperty<Color?> get _widgetFillColor {
@@ -237,8 +263,8 @@ class _TristateCheckboxState extends State<TristateCheckbox>
       child: Builder(
         builder: (BuildContext context) {
           return _CheckboxRenderObjectWidget(
-            value: widget.value,
-            tristate: widget.tristate,
+            value: widget.value.value,
+            tristate: widget._tristate,
             activeColor: effectiveActiveColor,
             checkColor: effectiveCheckColor,
             inactiveColor: effectiveInactiveColor,
@@ -249,7 +275,7 @@ class _TristateCheckboxState extends State<TristateCheckbox>
             splashRadius: widget.splashRadius ??
                 themeData.checkboxTheme.splashRadius ??
                 kRadialReactionRadius,
-            onChanged: widget.onChanged,
+            onChanged: (value) => widget.onChanged!(value.tristate),
             additionalConstraints: additionalConstraints,
             vsync: this,
             hasFocus: _focused,
@@ -279,11 +305,7 @@ class _CheckboxRenderObjectWidget extends LeafRenderObjectWidget {
     required this.additionalConstraints,
     required this.hasFocus,
     required this.hovering,
-  })   : assert(tristate != null),
-        assert(tristate || value != null),
-        assert(activeColor != null),
-        assert(inactiveColor != null),
-        assert(vsync != null),
+  })   : assert(tristate || value != null),
         super(key: key);
 
   final bool? value;
