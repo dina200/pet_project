@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'infrastructure/injector/injector.dart';
-import 'presentation/pages/my_home_page.dart';
-import 'presentation/theme/my_theme.dart';
 import 'application/general/theme_cubit.dart';
+import 'application/router/pet_project_delegate.dart';
+import 'infrastructure/injector/injector.dart';
+import 'presentation/theme/my_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,10 +21,11 @@ class MyApp extends StatelessWidget {
       ],
       child: BlocBuilder<ThemeCubit, MyTheme>(
         builder: (BuildContext context, state) {
-          return  MaterialApp(
+          return  MaterialApp.router(
             title: 'Flutter Theme',
             theme: state.theme,
-            home: MyHomePage(),
+            routerDelegate: PetProjectDelegate(),
+            routeInformationParser: PetProjectRouteInformationParser(),
           );
         },
       ),

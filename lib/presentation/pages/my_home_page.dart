@@ -4,18 +4,35 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:pet_project/application/general/theme_cubit.dart';
 import 'package:pet_project/presentation/theme/my_theme.dart';
-import 'package:pet_project/presentation/tristate_checkbox.dart';
-import 'package:pet_project/presentation/tristate_checkbox_list_tile.dart';
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends Page {
+  final VoidCallback onTapped;
+
+  MyHomePage(this.onTapped) : super(key: ValueKey('home'));
+
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  Route createRoute(BuildContext context) {
+    return MaterialPageRoute(
+      settings: this,
+      builder: (BuildContext context) {
+        return MyHomeScreen(onTapped);
+      },
+    );
+  }
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class MyHomeScreen extends StatefulWidget {
+  final VoidCallback onTapped;
+
+  const MyHomeScreen(this.onTapped, {Key? key}) : super(key: key);
+
+  @override
+  _MyHomeScreenState createState() => _MyHomeScreenState();
+}
+
+class _MyHomeScreenState extends State<MyHomeScreen> {
   bool _isSwitchActive = true;
   bool? _isCheckActive = true;
-  TristateEnum _isTristateCheckActive = TristateEnum.chosen;
   int? _radioGroupValue = 1;
   int _selectedDestination = 0;
 
@@ -152,15 +169,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
         Divider(),
-        TristateCheckboxListTile(
-          title: 'Title ',
-          additionalInfo: 'selected',
-          value: _isTristateCheckActive,
-          onChanged: (value) => setState(
-            () => _isTristateCheckActive = value,
-          ),
-        ),
-        Divider(),
         Row(
           children: [
             Radio(
@@ -195,7 +203,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             ElevatedButton(
               child: Text('El btn : active'),
-              onPressed: () {},
+              onPressed: widget.onTapped,
             ),
             ElevatedButton(
               child: Text('El btn : inactive'),
