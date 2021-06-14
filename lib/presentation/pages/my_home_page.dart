@@ -3,28 +3,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:pet_project/application/general/theme_cubit.dart';
+import 'package:pet_project/application/router/path.dart';
 import 'package:pet_project/presentation/theme/my_theme.dart';
 
 class MyHomePage extends Page {
-  final VoidCallback onTapped;
+  final ValueChanged<PetProjectRoutePath> onPageChanged;
 
-  MyHomePage(this.onTapped) : super(key: ValueKey('home'));
+  MyHomePage(this.onPageChanged) : super(key: ValueKey('home'));
 
   @override
   Route createRoute(BuildContext context) {
     return MaterialPageRoute(
       settings: this,
       builder: (BuildContext context) {
-        return MyHomeScreen(onTapped);
+        return MyHomeScreen(onPageChanged);
       },
     );
   }
 }
 
 class MyHomeScreen extends StatefulWidget {
-  final VoidCallback onTapped;
+  final ValueChanged<PetProjectRoutePath> onPageChanged;
 
-  const MyHomeScreen(this.onTapped, {Key? key}) : super(key: key);
+  const MyHomeScreen(this.onPageChanged, {Key? key}) : super(key: key);
 
   @override
   _MyHomeScreenState createState() => _MyHomeScreenState();
@@ -45,7 +46,7 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
       child: PlatformLayoutWrapper(
         appBar: _buildAppBar(),
         drawer: _buildDrawer(),
-        body: _buildBody(),
+        body: _buildContent(),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () {},
@@ -87,21 +88,21 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
           ),
           ListTile(
             leading: Icon(Icons.favorite),
-            title: Text('Item 1'),
+            title: Text('Home'),
             selected: _selectedDestination == 0,
-            onTap: () => _selectDestination(0),
+            onTap: () {
+              _selectDestination(0);
+              widget.onPageChanged(HomeRoutePath());
+            },
           ),
           ListTile(
             leading: Icon(Icons.delete),
-            title: Text('Item 2'),
+            title: Text('Detail'),
             selected: _selectedDestination == 1,
-            onTap: () => _selectDestination(1),
-          ),
-          ListTile(
-            leading: Icon(Icons.label),
-            title: Text('Item 3'),
-            selected: _selectedDestination == 2,
-            onTap: () => _selectDestination(2),
+            onTap: () {
+              _selectDestination(1);
+              widget.onPageChanged(DetailRoutePath());
+            },
           ),
         ],
       ),
@@ -113,17 +114,6 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
       _selectedDestination = index;
     });
     Navigator.pop(context);
-  }
-
-  Widget _buildBody() {
-    return IndexedStack(
-      index: _selectedDestination,
-      children: [
-        _buildContent(),
-        Center(child: Text('second')),
-        Center(child: Text('third')),
-      ],
-    );
   }
 
   Widget _buildContent() {
@@ -203,7 +193,7 @@ class _MyHomeScreenState extends State<MyHomeScreen> {
           children: [
             ElevatedButton(
               child: Text('El btn : active'),
-              onPressed: widget.onTapped,
+              onPressed: () {},
             ),
             ElevatedButton(
               child: Text('El btn : inactive'),
